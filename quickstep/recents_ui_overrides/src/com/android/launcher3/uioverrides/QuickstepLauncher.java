@@ -119,29 +119,6 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
     @Override
     protected void onResume() {
         super.onResume();
-        showOlauncher();
-    }
-
-    // make Olauncher is default launcher
-    private void setOlauncherAdminPermission() {
-        Log.d(TAG, "starting setOlauncherAdminPermission");
-        RoleManager roleManager = getApplicationContext().getSystemService(RoleManager.class);
-        UserHandle user = Process.myUserHandle();
-        Executor executor = getApplicationContext().getMainExecutor();
-        Consumer<Boolean> callback = successful -> {
-            if (successful) {
-                Log.i(TAG, "Package app.olauncher.debug " + "added as home");
-            } else {
-                Log.i(TAG, "Failed to " + "add app.olauncher.debug as home");
-            }
-        };
-        roleManager.addRoleHolderAsUser(RoleManager.ROLE_HOME, "app.olauncher.debug", 0, user, executor, callback);
-    }
-
-    private void showOlauncher() {
-        Intent intent = new Intent();
-        intent.setComponent(new ComponentName("app.olauncher.debug", "app.olauncher.MainActivity"));
-        startActivity(intent);
     }
 
     @Override
