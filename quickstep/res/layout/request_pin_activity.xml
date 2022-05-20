@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textColor="#449def"
+        android:text="Please setup a PIN to secure your phone before accessing other features"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btn_go_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:onClick="onGoSetting"
+        android:background="@drawable/buttonselector"
+        android:layout_centerInParent="true"
+        android:paddingHorizontal="10dp"
+        android:layout_below="@+id/tv_header"
+        android:layout_marginTop="20dp"/>
+
+</RelativeLayout>

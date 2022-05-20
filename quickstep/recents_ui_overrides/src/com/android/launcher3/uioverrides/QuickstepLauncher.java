@@ -33,6 +33,9 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.app.KeyguardManager;
+import android.content.Context;
+import android.os.Build;
 
 import android.os.Process;
 import android.app.role.RoleManager;
@@ -119,6 +122,23 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
     @Override
     protected void onResume() {
         super.onResume();
+        showRequestPinorNot();
+    }
+
+    private void showRequestPinorNot() {
+        // check device have password or not to show requestpin
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            KeyguardManager keyguardManager = (KeyguardManager) getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
+            Log.d(
+                TAG,
+                "thanhlt is device secure: " + keyguardManager.isDeviceSecure()
+            );
+            if (!keyguardManager.isDeviceSecure()) {
+                Intent pinIntent = new Intent(getApplicationContext(), RequestPinActivity.class);
+                startActivity(pinIntent);
+                return;
+            }
+        }
     }
 
     @Override
