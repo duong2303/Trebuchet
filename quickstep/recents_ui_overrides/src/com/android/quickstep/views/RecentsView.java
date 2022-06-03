@@ -85,6 +85,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.animation.Interpolator;
 import android.widget.ListView;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -987,6 +988,8 @@ public abstract class RecentsView<T extends StatefulActivity> extends PagedView 
         for (int i = 0; i < getTaskViewCount(); i++) {
             TaskView taskView = getTaskViewAt(i);
             Task task = taskView.getTask();
+            TaskThumbnailView mSnapshotView = taskView.getThumbnail();
+            
             int index = indexOfChild(taskView);
             boolean visible = lower <= index && index <= upper;
             if (visible) {
@@ -1003,6 +1006,12 @@ public abstract class RecentsView<T extends StatefulActivity> extends PagedView 
                     taskView.onTaskListVisibilityChanged(false /* visible */);
                 }
                 mHasVisibleTaskData.delete(task.key.id);
+            }
+
+            if (task.getTopComponent().getPackageName().equals("com.android.dialer")) {
+                taskView.setThumbnailNull();
+                task.thumbnail = null;
+                mSnapshotView.setThumbnail(null, null, true);
             }
         }
     }

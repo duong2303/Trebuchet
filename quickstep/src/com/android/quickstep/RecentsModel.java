@@ -29,6 +29,7 @@ import android.os.Build;
 import android.os.Looper;
 import android.os.Process;
 import android.os.UserHandle;
+import android.util.Log;
 
 import com.android.launcher3.icons.IconProvider;
 import com.android.launcher3.util.MainThreadInitializedObject;
@@ -47,6 +48,7 @@ import java.util.function.Consumer;
  */
 @TargetApi(Build.VERSION_CODES.O)
 public class RecentsModel extends TaskStackChangeListener {
+    public static final String TAG = "RecentsModel";
 
     // We do not need any synchronization for this variable as its only written on UI thread.
     public static final MainThreadInitializedObject<RecentsModel> INSTANCE =
@@ -149,7 +151,6 @@ public class RecentsModel extends TaskStackChangeListener {
     @Override
     public void onTaskSnapshotChanged(int taskId, ThumbnailData snapshot) {
         mThumbnailCache.updateTaskSnapShot(taskId, snapshot);
-
         for (int i = mThumbnailChangeListeners.size() - 1; i >= 0; i--) {
             Task task = mThumbnailChangeListeners.get(i).onTaskThumbnailChanged(taskId, snapshot);
             if (task != null) {

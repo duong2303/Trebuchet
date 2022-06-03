@@ -41,6 +41,7 @@ import android.util.FloatProperty;
 import android.util.Property;
 import android.view.Surface;
 import android.view.View;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -63,6 +64,7 @@ import com.android.systemui.shared.recents.model.ThumbnailData;
  * A task in the Recents view.
  */
 public class TaskThumbnailView extends View implements PluginListener<OverviewScreenshotActions> {
+    public static final String TAG = "TaskThumbnailView";
 
     private static final ColorMatrix COLOR_MATRIX = new ColorMatrix();
     private static final ColorMatrix SATURATION_COLOR_MATRIX = new ColorMatrix();

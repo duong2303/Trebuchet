@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class TaskThumbnailCache {
+    public static final String TAG = "TaskThumbnailCache";
 
     private final Handler mBackgroundHandler;
 

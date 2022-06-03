@@ -422,6 +422,11 @@ public class TaskView extends FrameLayout implements PageCallbacks, Reusable {
         return mSnapshotView;
     }
 
+    public void setThumbnailNull() {
+        mTask.thumbnail = null;
+        mSnapshotView.setThumbnail(null, null);
+    }
+
     public IconView getIconView() {
         return mIconView;
     }
@@ -515,26 +520,44 @@ public class TaskView extends FrameLayout implements PageCallbacks, Reusable {
     }
 
     public void onTaskListVisibilityChanged(boolean visible) {
+        boolean isDialerPackage = false;
         if (mTask == null) {
             return;
         }
         cancelPendingLoadTasks();
+        if (mTask.getTopComponent().getPackageName().equals("com.android.dialer")) {
+            isDialerPackage = true;
+        }
         if (visible) {
             // These calls are no-ops if the data is already loaded, try and load the high
             // resolution thumbnail if the state permits
             RecentsModel model = RecentsModel.INSTANCE.get(getContext());
             TaskThumbnailCache thumbnailCache = model.getThumbnailCache();
-            TaskIconCache iconCache = model.getIconCache();
-            mThumbnailLoadRequest = thumbnailCache.updateThumbnailInBackground(
-                    mTask, thumbnail -> mSnapshotView.setThumbnail(mTask, thumbnail));
-            mIconLoadRequest = iconCache.updateIconInBackground(mTask,
-                    (task) -> {
-                        setIcon(task.icon);
-                        if (ENABLE_QUICKSTEP_LIVE_TILE.get() && isRunningTask()) {
-                            getRecentsView().updateLiveTileIcon(task.icon);
-                        }
-                        mDigitalWellBeingToast.initialize(mTask);
-                    });
+            if (isDialerPackage) {
+                TaskIconCache iconCache = model.getIconCache();
+                mIconLoadRequest = iconCache.updateIconInBackground(mTask,
+                        (task) -> {
+                            setIcon(task.icon);
+                            if (ENABLE_QUICKSTEP_LIVE_TILE.get() && isRunningTask()) {
+                                getRecentsView().updateLiveTileIcon(task.icon);
+                            }
+                            mDigitalWellBeingToast.initialize(mTask);
+                        });
+                mSnapshotView.setThumbnail(null, null);
+                mTask.thumbnail = null;
+            } else {
+                TaskIconCache iconCache = model.getIconCache();
+                mThumbnailLoadRequest = thumbnailCache.updateThumbnailInBackground(
+                        mTask, thumbnail -> mSnapshotView.setThumbnail(mTask, thumbnail));
+                mIconLoadRequest = iconCache.updateIconInBackground(mTask,
+                        (task) -> {
+                            setIcon(task.icon);
+                            if (ENABLE_QUICKSTEP_LIVE_TILE.get() && isRunningTask()) {
+                                getRecentsView().updateLiveTileIcon(task.icon);
+                            }
+                            mDigitalWellBeingToast.initialize(mTask);
+                        });
+            }
         } else {
             mSnapshotView.setThumbnail(null, null);
             setIcon(null);

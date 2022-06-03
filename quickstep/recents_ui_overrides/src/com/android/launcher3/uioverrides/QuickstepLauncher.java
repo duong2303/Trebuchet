@@ -129,10 +129,6 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
         // check device have password or not to show requestpin
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             KeyguardManager keyguardManager = (KeyguardManager) getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
-            Log.d(
-                TAG,
-                "thanhlt is device secure: " + keyguardManager.isDeviceSecure()
-            );
             if (!keyguardManager.isDeviceSecure()) {
                 Intent pinIntent = new Intent(getApplicationContext(), RequestPinActivity.class);
                 startActivity(pinIntent);

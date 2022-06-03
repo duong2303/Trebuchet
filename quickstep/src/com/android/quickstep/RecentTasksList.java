@@ -169,7 +169,7 @@ public class RecentTasksList extends TaskStackChangeListener {
         int currentUserId = Process.myUserHandle().getIdentifier();
         List<ActivityManager.RecentTaskInfo> rawTasks =
                 mActivityManagerWrapper.getRecentTasks(numTasks, currentUserId);
-        // thanhlt remove chek from task list
+        // remove chek from task list
         for(int i = 0; i < rawTasks.size(); i++) {
             if (rawTasks.get(i).baseActivity != null) {
                 String packageName = rawTasks.get(i).baseActivity.getPackageName();
