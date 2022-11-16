@@ -69,15 +69,5 @@
                 android:name="com.android.launcher3.grid.control"
                 android:value="${packageName}.grid_control" />
         </activity>
-        <activity
-            android:name=".RequestPinActivity"
-            android:theme="@style/LauncherTheme"
-            android:noHistory="true"
-            android:launchMode="singleTask"
-            android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
     </application>
 </manifest>

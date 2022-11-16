@@ -125,10 +125,10 @@
         </activity>
 
         <activity
-            android:name=".RequestPinActivity"
+            android:name="com.android.launcher3.uioverrides.RequestPinActivity"
             android:theme="@style/LauncherTheme"
             android:noHistory="true"
-            android:exported="false" 
+            android:exported="true"
             android:launchMode="singleTask"
             android:clearTaskOnLaunch="true">
             <intent-filter>
